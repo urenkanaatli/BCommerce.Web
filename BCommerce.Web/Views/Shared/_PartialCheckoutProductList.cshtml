@@ -1,0 +1,33 @@
+﻿@model BasketDTO
+<div class="uk-card uk-card-default uk-card-small tm-ignore-container uk-sticky" uk-sticky="offset: 30; bottom: true; media: @@m;" style="position: sticky; top: 30px;">
+    <section class="uk-card-body">
+        <h4>Siparişlerim</h4>
+
+        @foreach (var item in Model.Items)
+        {
+            <div class="uk-grid-small uk-grid" uk-grid="">
+                <div class="uk-width-expand uk-first-column">
+                    <div class="uk-text-small">
+                        @item.Name
+                    </div>
+                    <div class="uk-text-meta">@item.Count × $@item.Price</div>
+                </div>
+                <div class="uk-text-right">
+                    <div>$@(item.Price*item.Count)</div>
+                </div>
+            </div>
+        }
+    </section>
+    <section class="uk-card-body">
+        <div class="uk-grid-small uk-grid" uk-grid="">
+            <div class="uk-width-expand uk-first-column">
+                <div class="uk-text-muted">Subtotal</div>
+            </div>
+            <div class="uk-text-right">
+                <div>$(@Model.Total)</div>
+            </div>
+        </div>
+
+    </section>
+
+</div>

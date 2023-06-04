@@ -1,0 +1,43 @@
+﻿@using DevExtreme.AspNet.Mvc;
+<div class="container-fluid">
+
+    <div class="card" style="margin-top:20px">
+        <div class="card-body">
+            <h5 class="card-title">Kategoiler</h5>
+
+            @(
+                Html.DevExtreme().DataGrid<CategoryModel>()
+                        .ShowBorders(true)
+                        .DataSource(d => d.Mvc().Controller("Category").LoadAction("GetCategories").Key("Id").InsertAction("AddCategory").UpdateAction("UpdateCategory").DeleteAction("RemoveCategory"))
+                        .Editing(editing =>
+                        {
+                            editing.Mode(GridEditMode.Cell);
+                            editing.AllowUpdating(true).UseIcons(true);
+                            editing.AllowAdding(true).UseIcons(true);
+                            editing.AllowDeleting(true);
+                        })
+                        .Columns(columns =>
+                        {
+                            columns.AddFor(t => t.Id).Caption("No").AllowEditing(false);
+                            columns.AddFor(t => t.Name).Caption("Ad");
+                            columns.AddFor(t => t.MainCategoryId).Caption("MainCategory").Lookup(c =>
+                            {
+                                c.DataSource(d => d.Mvc().Controller("Category").LoadAction("MainCategoryList")).ValueExpr("Id").DisplayExpr("Name");
+
+                        });
+
+                })
+            @*.Scrolling(scrol => scrol.Mode(GridScrollingMode.Standard)).ColumnAutoWidth(true)*@
+                .Height(750).ShowRowLines(true).HoverStateEnabled(true)
+                .AllowColumnResizing(true)
+                .Paging(p => p.PageSize(50))
+                .FilterRow(f => f.Visible(true))
+                .HeaderFilter(f => f.Visible(true))
+                .GroupPanel(p => p.Visible(true))
+                .Grouping(g => g.AutoExpandAll(false))
+                .RemoteOperations(true).Export(t => { t.Enabled(true); })
+                )
+
+        </div>
+    </div>
+</div>

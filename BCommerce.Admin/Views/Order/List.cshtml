@@ -1,0 +1,149 @@
+﻿
+<div id="example">
+    <div id="grid"></div>
+
+    <script type="text/x-kendo-template" id="template">
+        <div class="detailTabstrip">
+            <ul>
+                <li class="k-active">
+                    Ürünler
+                </li>
+                <li>
+                    Adres
+                </li>
+            </ul>
+            <div>
+                <div class="products"></div>
+            </div>
+            <div>
+                <div class='employee-details'>
+                    <ul>
+                        <li><label>Country:</label>#= AddressInfo.Country #</li>
+                        <li><label>City:</label>#= AddressInfo.City #</li>
+                        <li><label>Tel :</label>#= AddressInfo.Phone #</li>
+                        <li><label>Açık Adres:</label>#= AddressInfo.Description #</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var element = $("#grid").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "/Order/WaitingOrderList"
+                    },
+                    pageSize: 20,
+                    serverPaging: true,
+                    serverSorting: true
+                },
+                height: 550,
+                sortable: true,
+                pageable: false,
+                detailTemplate: kendo.template($("#template").html()),
+                detailInit: detailInit,
+                dataBound: function () {
+                    this.expandRow(this.tbody.find("tr.k-master-row").first());
+                },
+                columns: [
+                    {
+                        field: "OrderId",
+                        title: "Order No",
+                        width: "120px"
+                    },
+                    {
+                        field: "OrderStatus",
+                        title: "Durum",
+                        width: "120px"
+                    },
+                    {
+                        field: "Total",
+                        title: "Toplam",
+                        width: "120px"
+                    },
+                    {
+                        field: "Date",
+                        title: "Tarih",
+                        width: "120px"
+                    }
+                ]
+            });
+        });
+
+        function detailInit(e) {
+
+            console.log(e);
+
+            var detailRow = e.detailRow;
+
+            detailRow.find(".detailTabstrip").kendoTabStrip({
+                animation: {
+                    open: { effects: "fadeIn" }
+                }
+            });
+
+            detailRow.find(".products").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "/Order/GetOrderProducts?orderid=" + e.data.OrderId
+                    },
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 7,
+                    filter: { field: "orderid", operator: "eq", value: e.data.Id }
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Id", title: "ID", width: "70px" },
+                    { field: "Name", title: "Ürün Adı", width: "110px" },
+                    { field: "Count", title: "Ürün Adet" },
+                    { field: "Price", title: "Fiyat", width: "300px" }
+                ]
+            });
+        }
+    </script>
+    <style>
+        .k-detail-cell .k-tabstrip {
+            padding: 0.2em;
+        }
+
+        .employee-details ul {
+            list-style: none;
+            font-style: italic;
+            margin: 15px;
+            padding: 0;
+        }
+
+            .employee-details ul li {
+                margin: 0;
+                line-height: 1.7em;
+            }
+
+        .employee-details label {
+            display: inline-block;
+            width: 90px;
+            padding-right: 10px;
+            text-align: right;
+            font-style: normal;
+            font-weight: bold;
+        }
+    </style>
+</div>
+
+
+
+
+
+
+
+
+
+
+

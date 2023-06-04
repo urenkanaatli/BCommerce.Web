@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.9.2" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="22.2.4" />
+    <PackageReference Include="KendoUICore" Version="2023.1.425" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BCommerce.Application\BCommerce.Application.csproj" />
+    <ProjectReference Include="..\BCommerce.Core\BCommerce.Core.csproj" />
+    <ProjectReference Include="..\BCommerce.Insfrastructure\BCommerce.Insfrastructure.csproj" />
+  </ItemGroup>
+</Project>

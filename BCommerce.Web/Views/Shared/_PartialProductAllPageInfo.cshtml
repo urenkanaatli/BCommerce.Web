@@ -1,0 +1,32 @@
+﻿@model FilteredProductDTO
+
+@*Home- https://localhost:7084/Catalog/All (Catalog) -- ilgili category
+Home - https://localhost:7084/Brand/List (brands)-- ilgili brand
+*@
+@if(Model.CurrentCategory!=null)
+{
+
+    <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
+        <li><a href="/">Home</a></li>
+        <li><a asp-action="All" asp-controller="Catalog">Catalog</a></li>
+        <li><span>@Model.CurrentCategory</span></li>
+    </ul>
+    <h1 class="uk-margin-small-top uk-margin-remove-bottom">@Model.CurrentCategory</h1>
+}else if(Model.CurrentBrand!=null)
+{
+
+    <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
+        <li><a href="/">Home</a></li>
+        <li><a asp-action="List" asp-controller="Brand">Brands</a></li>
+        <li><span>@Model.CurrentBrand</span></li>
+    </ul>
+    <h1 class="uk-margin-small-top uk-margin-remove-bottom">@Model.CurrentBrand</h1>
+}
+
+
+
+
+@if (Model.ProductCount > 0)
+{
+    <div class="uk-text-meta uk-margin-xsmall-top">@Model.ProductCount ürün </div>
+}
